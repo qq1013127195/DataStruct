@@ -15,6 +15,8 @@ inline __int64 sqr(__int64 a) { return a * a; }
 __int64 power2(int);//幂函数（优化递归版）
 int sum(int[], size_t, size_t);//分而治之
 __int64 fib(int);//fib二分递归
+__int64 fib(int, __int64);//线性递归
+__int64 fibI(int);//迭代
 
 
 int main(int argc, char* argv[])
@@ -162,4 +164,30 @@ __int64 fib(int n)
 	return (2 > n) ?
 		(__int64)n
 		: fib(n - 1) + fib(n - 2);
+}
+
+__int64 fib(int n, __int64 prev)
+{
+	if (n == 0)
+	{
+		prev = 1;
+		return 0;
+	}
+	else
+	{
+		__int64 prevPrev;
+		prev = fib(n - 1, prevPrev);
+		return prev + prevPrev;
+	}
+}
+
+__int64 fibI(int n)
+{
+	__int64 f = 1, g = 0;
+	while (0 < n--)
+	{
+		g += f;
+		f = g - f;
+	}
+	return g;
 }
