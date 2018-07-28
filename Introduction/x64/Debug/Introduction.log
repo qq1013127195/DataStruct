@@ -1,2 +1,3 @@
 ﻿  main.cpp
+c:\users\yang\source\repos\datastruct\introduction\main.cpp(154): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Introduction.vcxproj -> C:\Users\Yang\source\repos\DataStruct\x64\Debug\Introduction.exe
