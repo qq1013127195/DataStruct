@@ -2,43 +2,6 @@ import java.io.*;
 
 public class BigData {
 
-    /*public static void main(String[] args) {
-        String filePath = "/home/yang/Desktop/13301104001";
-        String encoding = "GBK";
-        String outFilePath = "/home/yang/Desktop/out";
-
-        try {
-            File file = new File(filePath);
-            File outFile = new File(outFilePath);
-            if (file.isFile() && file.exists()) {
-                InputStreamReader in = new InputStreamReader(new FileInputStream(file), encoding);
-                BufferedReader buff = new BufferedReader(in);
-                OutputStream outPut = new FileOutputStream(outFile);
-                String line;
-                while ((line = buff.readLine()) != null) {
-                    String words[] = line.split(",");
-                    if (Integer.parseInt(words[8]) <= 90) {
-                        byte data[] = line.getBytes();
-                        outPut.write(data);
-                        outPut.write("\n".getBytes()); //\r\n是win换行符，根据不同情况更改
-                    }
-                }
-                in.close();
-                buff.close();
-                outPut.close();
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    private static final double EARTH_RADIUS = 6378137;
-
     public static void main(String[] args) {
         String inFilePath = "/home/yang/Desktop/13301104001";
         String encoding = "UTF8";
@@ -52,15 +15,18 @@ public class BigData {
         inFile = new File(inFilePath);
         outFile = new File(outFilePath);
 
-        if (inFile.isFile() && inFile.exists()) {
-            try {
-                in = new InputStreamReader(new FileInputStream(inFile), encoding);
-                buff = new BufferedReader(in);
-                out = new FileOutputStream(outFile);
+        try {
+            in = new InputStreamReader(new FileInputStream(inFile), encoding);
+            buff = new BufferedReader(in);
+            out = new FileOutputStream(outFile);
+            if (inFile.isFile() && inFile.exists()) {
 
                 String line1 = buff.readLine();
                 String line2 = buff.readLine();
+
                 while (line1 != null && line2 != null) {
+                    boolean bool = true;//判断上一个是否输出了两个
+
                     String words1[] = line1.split(",");
                     String words2[] = line2.split(",");
 
@@ -70,29 +36,42 @@ public class BigData {
                     double num21 = Double.parseDouble(words2[4]);
                     double num22 = Double.parseDouble(words2[5]);
 
-                    if (getDistance(num11, num12, num21, num22) < 2000) {//小于2000全写
-                        byte data[] = (line1 + "\n").getBytes();
-                        out.write(data);
-                        data = (line2 + "\n").getBytes();
-                        out.write(data);
-                    } else if (getDistance(num11, num12, num21, num22) > 2000) {//大于2000只写第一个
-                        byte data[] = (line1 + "\n").getBytes();
-                        out.write(data);
+                    if (Integer.parseInt(words1[8]) <= 90) {
+                        if (getDistance(num11, num12, num21, num22) < 2000) {//小于2000全写
+                            if (bool) { //如果上一次输出了两行，此次再输出line1就重复了（这一行的line1等于上一次的line2）
+                                byte data[] = (line2 + "\n").getBytes();
+                                out.write(data);
+                            } else {
+                                byte data[] = (line1 + "\n").getBytes();
+                                out.write(data);
+                                data = (line2 + "\n").getBytes();
+                                out.write(data);
+                            }
+                            bool = true;
+                        } else if (getDistance(num11, num12, num21, num22) >= 2000) {//大于2000只写第一个
+                            if (!bool) { //和上面同理
+                                byte data[] = (line1 + "\n").getBytes();
+                                out.write(data);
+                            }
+                            bool = false;
+                        }
+
                     }
 
                     //递进
                     line1 = line2;
                     line2 = buff.readLine();
                 }
-
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
         try {
             in.close();
             buff.close();
@@ -100,8 +79,9 @@ public class BigData {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
     }
+
+    private static final double EARTH_RADIUS = 6378137;
 
     private static double rad(double d) {
         return d * Math.PI / 180.0;
