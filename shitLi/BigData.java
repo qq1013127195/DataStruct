@@ -56,6 +56,8 @@ public class BigData {
                             bool = false;
                         }
 
+                    } else {
+                        bool = false;
                     }
 
                     //递进
