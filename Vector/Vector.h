@@ -20,7 +20,7 @@ protected:
     void copyFrom(T const *A, Rank lo, Rank hi); //复制数组区间A[lo, hi)
     void expand(); // 空间不足时扩容
     void shrink(); // 装填因子过小时压缩
-    void bubble(Rank lo, Rank hi); //扫描交换
+    bool bubble(Rank lo, Rank hi); //扫描交换
     void bubbleSort(Rank lo, Rank hi); //冒泡排序算法
     Rank max(Rank lo, Rank hi); //选取最大元素
     void selectionSort(Rank lo, Rank hi); //选择排序算法
@@ -45,11 +45,11 @@ public:
     {
         copyFrom(A, lo, hi);
     }
-    Vector(Vector<T> const &V)
+    Vector(const Vector<T> &V)
     {
         copyFrom(V._elem, 0, V._size);
     }
-    Vector(Vector<T> const &V, Rank lo, Rank hi)
+    Vector(const Vector<T> &V, Rank lo, Rank hi)
     {
         copyFrom(V._elem, lo, hi);
     }
@@ -70,23 +70,23 @@ public:
         return !_size;
     }
     int disordered() const; //判断向量是否已排序
-    Rank find(T const &e, Rank lo, Rank hi) const; //无序向量区间查找
-    Rank find(T const &e) const //无序向量整体查找
+    Rank find(const T &e, Rank lo, Rank hi) const; //无序向量区间查找
+    Rank find(const T &e) const //无序向量整体查找
     {
         return find(e, 0, _size);
     }
-    Rank search(T const &e, Rank lo, Rank hi) const; //有序向量区间查找
-    Rank search(T const &e) const //有序向量整体查找
+    Rank search(const T &e, Rank lo, Rank hi) const; //有序向量区间查找
+    Rank search(const T &e) const //有序向量整体查找
     {
         return (0 >= _size) ? -1 : search(e, 0, _size);
     }
 
     //可写访问接口
     T &operator[](Rank r) const;
-    Vector<T> &operator=(Vector<T> const&);
+    Vector<T> &operator=(const Vector<T> &);
     T remove(Rank r); //删除秩为r的元素
     int remove(Rank lo, Rank hi); //删除秩在区间[lo, hi)之内的元素
-    Rank insert(Rank r, T const &e); //插入元素
+    Rank insert(Rank r, const T &e); //插入元素
     Rank insert(T const &e) //默认作为末元素插入
     {
         return insert(_size, e);
