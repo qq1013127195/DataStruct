@@ -51,7 +51,7 @@ protected:
 		_elem = new T[_capacity >>= 1];
 		for (int i = 0; i < _size; i++)
 		{
-			_elem[i] == oldElem[i];
+			_elem[i] = oldElem[i];
 		}
 		delete[] oldElem;
 	}
@@ -174,7 +174,7 @@ protected:
 
 public:
 	//构造函数
-	Vector(int c = DEFAULT_CAPACITY, int s = 0, T v = 0)
+	Vector(int c = DEFAULT_CAPACITY, int s = 0, T v = NULL)
 	{ //容量为c 规模为s 所有元素初始为v
 		_elem = new T[_capacity = c];
 		for (_size = 0; _size < s; _elem[_size++] = v); //s<=c
@@ -292,6 +292,7 @@ public:
 		for (int i = _size; i > r; i--)
 			_elem[i] = _elem[i - 1];
 		_elem[r] = e;
+		_size++;
 		return r;
 	}
 	Rank insert(T const &e) //默认作为末元素插入
