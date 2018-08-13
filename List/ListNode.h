@@ -16,7 +16,7 @@ struct ListNode
 	ListNodePosi(T) succ;
 
 	ListNode() {}
-	ListNode(T e, ListNodePosi(T)p = nullptr, ListNodePosi(T)s = nullptr)
+	ListNode(T e, ListNodePosi(T) p = nullptr, ListNodePosi(T) s = nullptr)
 		: data(e), pred(p), succ(s) {}
 	
 	ListNodePosi(T) insertAsPred(const T &e)

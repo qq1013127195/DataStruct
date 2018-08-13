@@ -39,7 +39,7 @@ protected:
 		return oldSize;
 	}
 	
-	void copyNodes(ListNodePosi(T)p, int n)
+	void copyNodes(ListNodePosi(T) p, int n)
 	{
 		init();
 		while (n--)
@@ -49,7 +49,7 @@ protected:
 		}
 	}
 	
-	void merge(ListNodePosi(T)&p, int n, List<T> &L, ListNodePosi(T)q, int m)
+	void merge(ListNodePosi(T) &p, int n, List<T> &L, ListNodePosi(T) q, int m)
 	{
 		while (0 < m)
 		{
@@ -67,7 +67,7 @@ protected:
 		}
 	}
 	
-	void mergeSort(ListNodePosi(T)&p, int n)
+	void mergeSort(ListNodePosi(T) &p, int n)
 	{
 		if (n < 2)
 			return;
@@ -80,7 +80,7 @@ protected:
 		merge(p, m, *this, q, n - m);
 	}
 	
-	void selectionSort(ListNodePosi(T)p, int n)
+	void selectionSort(ListNodePosi(T) p, int n)
 	{
 		ListNodePosi(T) head = p->pred;
 		ListNodePosi(T) tail = p;
@@ -95,7 +95,7 @@ protected:
 		}
 	}
 	
-	void insertionSort(ListNodePosi(T)p, int n)
+	void insertionSort(ListNodePosi(T) p, int n)
 	{
 		for (int r = 0; r < n; r++)
 		{
@@ -118,7 +118,7 @@ public:
 		copyNodes(L[r], n);
 	}
 	
-	List(ListNodePosi(T)p, int n)
+	List(ListNodePosi(T) p, int n)
 	{
 		copyNodes(p, n);
 	}
@@ -155,7 +155,7 @@ public:
 		return find(e, _size, trailer);
 	}
 	
-	ListNodePosi(T) find(const T &e, int n, ListNodePosi(T)p) const
+	ListNodePosi(T) find(const T &e, int n, ListNodePosi(T) p) const
 	{
 		while (0 < n--)
 		{
@@ -165,7 +165,7 @@ public:
 		return nullptr;
 	}
 	
-	ListNodePosi(T) search(const T &e, int n, ListNodePosi(T)p) const
+	ListNodePosi(T) search(const T &e, int n, ListNodePosi(T) p) const
 	{
 		while (0 < n--)
 			if (((p = p->pred)->data) <= e)
@@ -173,7 +173,7 @@ public:
 		return p;
 	}
 	
-	ListNodePosi(T) selectMax(ListNodePosi(T)p, int n)
+	ListNodePosi(T) selectMax(ListNodePosi(T) p, int n)
 	{
 		ListNodePosi(T) max = p;
 		for (ListNodePosi(T) cur = p; 1 < n; n--)
@@ -200,19 +200,19 @@ public:
 		return trailer->insertAsPred(e);
 	}
 	
-	ListNodePosi(T) insertA(ListNodePosi(T)p, const T &e)
+	ListNodePosi(T) insertA(ListNodePosi(T) p, const T &e)
 	{
 		_size++;
 		return p->insertAsSucc(e);
 	}
 	
-	ListNodePosi(T) insertB(ListNodePosi(T)p, const T &e)
+	ListNodePosi(T) insertB(ListNodePosi(T) p, const T &e)
 	{
 		_size++;
 		return p->insertAsPred(e);
 	}
 	
-	T remove(ListNodePosi(T)p)
+	T remove(ListNodePosi(T) p)
 	{
 		T e = p->data;
 		p->pred->succ = p->succ;
@@ -226,7 +226,7 @@ public:
 		merge(first(), size(), l, l.first(), l._size);
 	}
 	
-	void sort(ListNodePosi(T)p, int n)
+	void sort(ListNodePosi(T) p, int n)
 	{
 		switch (rand() % 3)
 		{
